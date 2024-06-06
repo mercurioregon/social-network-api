@@ -1,8 +1,23 @@
 // *`/api/users`**
 
-// * `GET` all users
+const usermodel = require("../User")
 
-// * `GET` a single user by its `_id` and populated thought and friend data
+const router = require("express").Router()
+
+router.get("/", async (req,res)=> {
+    const users = await usermodel.find()
+    res.json(users)
+});
+
+router.get("/:_id", async (req,res)=> {
+    const user = await usermodel.findById(req.params._id)
+    res.json(user)
+});
+
+router.post("/", async (req,res)=> {
+    const user = await usermodel.create(req.body)
+    res.json(user)
+});
 
 // * `POST` a new user:
 
@@ -13,10 +28,19 @@
 //   "email": "lernantino@gmail.com"
 // }
 // ```
+router.put("/:_id", async (req,res)=> {
+    const user = await usermodel.findByIdAndUpdate(req.params._id, req.body)
+    res.json(user)
+});
 
-// * `PUT` to update a user by its `_id`
+router.delete("/:_id", async (req,res)=> {
+    const user = await usermodel.findByIdAndDelete(req.params._id, req.body)
+    res.json(uses)
+});
 
-// * `DELETE` to remove user by its `_id`
+
+module.exports = router
+
 
 // **BONUS**: Remove a user's associated thoughts when deleted.
 

@@ -1,10 +1,19 @@
+const mongoose = require("mongoose");
+const Reaction = require("./Reaction");
 
-const Thought = new mongoose.Schema({
-   thoughtText: {String, required: true, Must be between 1 and 280 characters},
+
+const ThoughtSchema = new mongoose.Schema({
+   thoughtText: {String, required: true, minLength: 1, maxLength: 280},
     createdAt:{ type: Date, default: Date.now },
     username: {String, required: true},
-    reactions: [Reactions]
+    reactions: [Reaction]
 });
+
+ThoughtSchema.virtual("reactionCount").get(()=>{
+    return this.reactions.length
+});
+const thoughtModel = mongoose.model("Thought", ThoughtSchema)
+
 
 // Create a virtual called `reactionCount` that retrieves the length of the thought's `reactions` array field on query.
 
@@ -27,4 +36,4 @@ const Thought = new mongoose.Schema({
 
 // **Schema Settings**:
 
-
+module.exports = thoughtModel;

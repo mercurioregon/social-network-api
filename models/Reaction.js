@@ -1,4 +1,13 @@
 // * `reactionId`
+
+
+const Reaction = new mongoose.Schema ({
+    reactionBody: {String, required: true, minLength: 1, maxLength: 280},
+    username: {String, required: true},
+    createdAt: {type: Date, default: Date.now }
+});
+
+
 //   * Use Mongoose's ObjectId data type
 //   * Default value is set to a new ObjectId
 
@@ -19,3 +28,5 @@
 // **Schema Settings**:
 
 // This will not be a model, but rather will be used as the `reaction` field's subdocument schema in the `Thought` model.
+
+module.exports = Reaction;
