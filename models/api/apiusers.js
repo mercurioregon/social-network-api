@@ -10,6 +10,7 @@ router.get("/", async (req,res)=> {
 });
 
 router.get("/:_id", async (req,res)=> {
+    console.log(req.params._id)
     const user = await usermodel.findById(req.params._id)
     res.json(user)
 });

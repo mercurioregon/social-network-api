@@ -2,9 +2,9 @@
 const mongoose = require("mongoose");
 // const Reaction = require("./Reaction");
 
-const reactionSchema = new mongoose.Schema ({
-    reactionBody: {String, required: true, minLength: 1, maxLength: 280},
-    username: {String, required: true},
+const ReactionSchema = new mongoose.Schema({
+    reactionBody: {type: String, minLength: 1, maxLength: 280},
+    username: {type: String, required: true},
     createdAt: {type: Date, default: Date.now }
 });
 
@@ -13,4 +13,4 @@ const reactionSchema = new mongoose.Schema ({
 
 // This will not be a model, but rather will be used as the `reaction` field's subdocument schema in the `Thought` model.
 
-module.exports = mongoose.model("Reaction", reactionSchema)
+module.exports = ReactionSchema

@@ -1,5 +1,6 @@
 
-const thoughtModel = require("../Thought")
+const thoughtModel = require("../Thought");
+const usermodel = require("../User");
 
 const router = require("express").Router()
 
@@ -13,10 +14,17 @@ router.get("/:_id", async (req,res)=> {
     res.json(thought)
 });
 
-router.post("/:_id", async (req,res)=> {
-    const thought = await thoughtModel.create(req.params._id, req.body)
+router.post("/", async (req,res)=> {
+    const thought = await thoughtModel.create({
+        thoughtText: req.body.thoughtText,
+        username: req.body.username
+    })
+    const user = await usermodel.findByIdAndUpdate(req.body.userId, {
+        $push: {thoughts: thought}
+    })
     res.json(thought)
 });
+
 
 // * `POST` a new user:
 
@@ -53,9 +61,6 @@ router.delete("/:thoughtId/reactions", async (req,res)=>{
 // * `POST` to create a reaction stored in a single thought's `reactions` array field
 
 // // * `DELETE` to pull and remove a reaction by the reaction's `reactionId` value
-
-
-
 
 module.exports = router
 
